@@ -29,6 +29,7 @@ export default function RootLayout() {
   return (
     <>
       <Stack>
+        {/* 用于导航操作 */}
         <Stack.Screen
           name='index'
           options={{ headerShown: false }}
