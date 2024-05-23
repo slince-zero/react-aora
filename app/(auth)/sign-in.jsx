@@ -1,14 +1,23 @@
 import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
 import { Link } from 'expo-router'
 import { images } from '../../constants'
-import { FormFiled } from '../../components'
+import { FormFiled, CustomButton } from '../../components'
 import { useState } from 'react'
 
 const SignIn = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const [form, setForm] = useState({
     email: '',
     password: '',
   })
+
+  const submit = () => {
+    setIsSubmitting(true)
+    setTimeout(() => {
+      setIsSubmitting(false)
+    }, 2000)
+  }
 
   return (
     <SafeAreaView className='bg-primary h-full'>
@@ -37,6 +46,7 @@ const SignIn = () => {
             value={form.email}
             otherStyles='mt-7'
             placeholder={'Enter your email'}
+            keyboardType='email-address'
             handleChangeText={(e) => setForm({ ...form, email: e })}
           />
           {/* 密码 */}
@@ -46,6 +56,13 @@ const SignIn = () => {
             otherStyles='mt-7'
             placeholder={'Enter your password'}
             handleChangeText={(e) => setForm({ ...form, password: e })}
+          />
+
+          <CustomButton
+            title='Sign In'
+            handlePress={submit}
+            contentContainerStyles={'mt-7'}
+            isLoading={isSubmitting}
           />
 
           <View className='flex justify-center pt-5 flex-row gap-2'>
