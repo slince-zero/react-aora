@@ -1,7 +1,7 @@
 import { SplashScreen, Stack } from 'expo-router'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
-
+import { GlobalContextProvider } from '../context/globalContext'
 // 阻止启动屏幕自动隐藏，直到我们调用 SplashScreen.hideAsync() 方法
 SplashScreen.preventAutoHideAsync()
 export default function RootLayout() {
@@ -28,25 +28,27 @@ export default function RootLayout() {
   if (!fontsLoaded && !error) return null
   return (
     <>
-      <Stack>
-        {/* 用于导航操作 */}
-        <Stack.Screen
-          name='index'
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='(auth)'
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='(tabs)'
-          options={{ headerShown: false }}
-        />
-        {/* <Stack.Screen
+      <GlobalContextProvider>
+        <Stack>
+          {/* 用于导航操作 */}
+          <Stack.Screen
+            name='index'
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='(auth)'
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='(tabs)'
+            options={{ headerShown: false }}
+          />
+          {/* <Stack.Screen
           name='/search/[query]'
           options={{ headerShown: false }}
         /> */}
-      </Stack>
+        </Stack>
+      </GlobalContextProvider>
     </>
   )
 }

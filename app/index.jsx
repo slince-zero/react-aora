@@ -1,11 +1,15 @@
-import { StatusBar } from 'expo-status-bar'
 import { Text, View, ScrollView, Image } from 'react-native'
-import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
+import { useContext } from 'react'
+import { Redirect, router } from 'expo-router'
 import { images } from '../constants'
+import { StatusBar } from 'expo-status-bar'
+import { GlobalContext } from '../context/globalContext'
 import CustomButton from '../components/CustomButton'
 export default function App() {
+  const { isLoading, isLoggedIn } = useContext(GlobalContext)
+  if (!isLoading && isLoggedIn) return <Redirect href='/home' />
+
   return (
     <>
       {/* 是一个视图容器，它会自动调整自身的布局，以确保其子组件不会被设备的物理特性（如刘海、圆角、状态栏等）遮挡。这个组件通常用于 iOS 设备，但也可以在 Android 上使用 */}
