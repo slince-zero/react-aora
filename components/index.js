@@ -1,4 +1,4 @@
 import FormFiled from './FormFiled'
 import CustomButton from './CustomButton'
-
-export { FormFiled, CustomButton }
+import SearchInput from './SearchInput'
+export { FormFiled, CustomButton, SearchInput }
