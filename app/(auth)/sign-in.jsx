@@ -9,10 +9,12 @@ import {
 import { Link, router } from 'expo-router'
 import { images } from '../../constants'
 import { FormFiled, CustomButton } from '../../components'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { loginUser } from '../../lib/appwrite'
-
+import { GlobalContext } from '../../context/globalContext'
 const SignIn = () => {
+  const { setUser, setIsLoggedIn } = useContext(GlobalContext)
+
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [form, setForm] = useState({
@@ -27,10 +29,15 @@ const SignIn = () => {
     setIsSubmitting(true)
     try {
       const result = await loginUser(form.email, form.password)
-
+      console.log(result, 'result--signIn')
+      setUser(result)
+      setIsLoggedIn(true)
+      Alert.alert("Success", "User signed in successfully");
       router.replace('/home')
     } catch (e) {
-      console.log(e)
+      Alert.alert('err--signIn', e.message)
+    } finally{
+      setIsSubmitting(false)
     }
   }
 

@@ -8,6 +8,7 @@ import { GlobalContext } from '../context/globalContext'
 import CustomButton from '../components/CustomButton'
 export default function App() {
   const { isLoading, isLoggedIn } = useContext(GlobalContext)
+  console.log(isLoading, isLoggedIn,'22');
   if (!isLoading && isLoggedIn) return <Redirect href='/home' />
 
   return (

@@ -7,11 +7,15 @@ import {
   Alert,
 } from 'react-native'
 import { Link, router } from 'expo-router'
+import { useState, useContext } from 'react'
 import { images } from '../../constants'
 import { FormFiled, CustomButton } from '../../components'
-import { useState } from 'react'
 import { createUser } from '../../lib/appwrite'
+import { GlobalContext } from '../../context/globalContext'
+
 const SignUp = () => {
+  const { setUser, setIsLoggedIn } = useContext(GlobalContext)
+
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [form, setForm] = useState({
@@ -27,10 +31,14 @@ const SignUp = () => {
     setIsSubmitting(true)
     try {
       const result = await createUser(form.username, form.email, form.password)
-
+      console.log(result, 'result---signUp')
+      setUser(result)
+      setIsLoggedIn(true)
       router.replace('/home')
     } catch (e) {
-      console.log(e)
+      Alert.alert('err--signUp', e.message)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
