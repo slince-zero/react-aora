@@ -1,12 +1,22 @@
-import { View, Text, FlatList, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { View, Text, FlatList, Image, RefreshControl } from 'react-native'
+import { useState } from 'react'
 import { images } from '../../constants'
 import { SearchInput, Trending, EmptyState } from '../../components'
 const Home = () => {
+  const [refreshing, setRefreshing] = useState(false)
+
+  const onRefresh = () => {
+    setRefreshing(true)
+    // call back when new videos are fetched
+    setRefreshing(false)
+  }
+
   return (
-    <SafeAreaView className='bg-primary'>
+    <SafeAreaView className='bg-primary h-full'>
       <FlatList
-        data={[]}
+        // data={[]}
+        data={[{ id: '1' }, { id: '2' }, { id: '3' }]}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Text className='text-2xl text-white'>{item.id}</Text>
@@ -48,6 +58,12 @@ const Home = () => {
             subtitle='No videos created yet'
           />
         )}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       />
     </SafeAreaView>
   )

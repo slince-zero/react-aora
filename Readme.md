@@ -85,3 +85,13 @@ const Stack = createStackNavigator()
 比如在 FlateList 中的用法是，必须data为空，ListEmptyComponent组件中的内容才能正常渲染, 下图中，若data内容为空，屏幕中间则会出现一个 🔍
 
 ![](./img/01.png)
+
+
+#### RefreshControl
+
+`RefreshControl` 是 `React Native` 提供的一个组件，用于实现下拉刷新功能。它通常与 `ScrollView``、FlatList` 和 `SectionList` 等滚动组件配合使用，允许用户通过下拉手势来刷新内容。
+
+功能：
+
+- 下拉刷新：当用户向下拉动列表或滚动视图时，会触发刷新操作。
+- 自定义刷新指示器：你可以自定义刷新指示器的颜色、大小等属性。
