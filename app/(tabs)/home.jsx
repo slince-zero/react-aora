@@ -3,11 +3,13 @@ import { View, Text, FlatList, Image, RefreshControl } from 'react-native'
 import { useState } from 'react'
 import { images } from '../../constants'
 import { SearchInput, Trending, EmptyState, VideoCard } from '../../components'
+import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
 
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false)
-  const { data: posts, refetch } = useAppwrite()
+  const { data: posts, refetch } = useAppwrite(getAllPosts)
+  const { data: latestsPosts } = useAppwrite(getLatestPosts)
 
   const onRefresh = async () => {
     setRefreshing(true)
@@ -58,7 +60,7 @@ const Home = () => {
               <Text className='text-lg font-pregular text-gray-100 mb-3'>
                 Latest Videos
               </Text>
-              <Trending />
+              <Trending posts={latestsPosts} />
             </View>
           </View>
         )}
