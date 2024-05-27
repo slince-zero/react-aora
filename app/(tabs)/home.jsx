@@ -1,11 +1,40 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { View, Text, FlatList, Image, RefreshControl } from 'react-native'
-import { useState } from 'react'
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  RefreshControl,
+  Alert,
+} from 'react-native'
+import { useState, useEffect } from 'react'
 import { images } from '../../constants'
 import { SearchInput, Trending, EmptyState } from '../../components'
+import { getAllPosts } from '../../lib/appwrite'
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false)
 
+  // videos data
+  const [data, setData] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      setIsLoading(true)
+      try {
+        const videos = await getAllPosts()
+        setData(videos)
+      } catch (e) {
+        Alert.alert('Error', e.message)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchVideos()
+  }, [])
+
+  console.log(data, 'data')
   const onRefresh = () => {
     setRefreshing(true)
     // call back when new videos are fetched
