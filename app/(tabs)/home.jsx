@@ -1,54 +1,35 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
-import {
-  View,
-  Text,
-  FlatList,
-  Image,
-  RefreshControl,
-  Alert,
-} from 'react-native'
-import { useState, useEffect } from 'react'
+import { View, Text, FlatList, Image, RefreshControl } from 'react-native'
+import { useState } from 'react'
 import { images } from '../../constants'
-import { SearchInput, Trending, EmptyState } from '../../components'
-import { getAllPosts } from '../../lib/appwrite'
+import { SearchInput, Trending, EmptyState, VideoCard } from '../../components'
+import useAppwrite from '../../lib/useAppwrite'
+
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false)
+  const { data: posts, refetch } = useAppwrite()
 
-  // videos data
-  const [data, setData] = useState()
-  const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      setIsLoading(true)
-      try {
-        const videos = await getAllPosts()
-        setData(videos)
-      } catch (e) {
-        Alert.alert('Error', e.message)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchVideos()
-  }, [])
-
-  console.log(data, 'data')
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true)
     // call back when new videos are fetched
+    await refetch()
     setRefreshing(false)
   }
-
   return (
     <SafeAreaView className='bg-primary h-full'>
       <FlatList
         // data={[]}
-        data={[{ id: '1' }, { id: '2' }, { id: '3' }]}
+        // data={[{ id: '1' }, { id: '2' }, { id: '3' }]}
+        data={posts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Text className='text-2xl text-white'>{item.id}</Text>
+          <VideoCard
+            title={item.title}
+            thumbnail={item.thumbnail}
+            video={item.video}
+            creator={item.creator.username}
+            avatar={item.creator.avatar}
+          />
         )}
         ListHeaderComponent={() => (
           <View className='flex my-6 px-4 space-y-6'>
