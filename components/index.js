@@ -4,4 +4,13 @@ import SearchInput from './SearchInput'
 import Trending from './Trending'
 import EmptyState from './EmptyState'
 import VideoCard from './VideoCard'
-export { FormFiled, CustomButton, SearchInput, Trending, EmptyState, VideoCard }
+import InfoBox from './InfoBox'
+export {
+  FormFiled,
+  CustomButton,
+  SearchInput,
+  Trending,
+  EmptyState,
+  VideoCard,
+  InfoBox,
+}
