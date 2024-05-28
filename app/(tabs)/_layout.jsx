@@ -1,8 +1,7 @@
 import { View, Text, Image } from 'react-native'
 import { Tabs } from 'expo-router'
 import { icons } from '../../constants'
-import { useEffect } from 'react'
-
+import { StatusBar } from 'expo-status-bar'
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
     <View className='flex items-center justify-center gap-2'>
@@ -94,6 +93,7 @@ const TabLayout = () => {
             ),
           }}></Tabs.Screen>
       </Tabs>
+      <StatusBar style='light' />
     </>
   )
 }
