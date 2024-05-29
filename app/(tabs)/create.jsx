@@ -13,6 +13,9 @@ const Create = () => {
     prompt: '',
   })
 
+  const openPicker = async (selectType) => {}
+
+  const submit = () => {}
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView className='px-4 my-6'>
@@ -29,7 +32,7 @@ const Create = () => {
         <View className='my-7 space-y-2'>
           <Text className='text-base text-gray-100'>upload video</Text>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => openPicker('video')}>
             {form.video ? (
               <Video />
             ) : (
@@ -53,7 +56,7 @@ const Create = () => {
             Thumbnail Image
           </Text>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => openPicker('video')}>
             {form.thumbnail ? (
               <Image
                 source={{
@@ -87,8 +90,8 @@ const Create = () => {
         />
         <CustomButton
           title='Submit & Publish'
-          // handlePress={submit}
-          // isLoading={uploading}
+          handlePress={submit}
+          isLoading={upLoading}
           contentContainerStyles='mt-7'
         />
       </ScrollView>
