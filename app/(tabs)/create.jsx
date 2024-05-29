@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { FormFiled } from '../../components'
+import { FormFiled, CustomButton } from '../../components'
 import { useState } from 'react'
 import { Video, ResizeMode } from 'expo-av'
 import { icons } from '../../constants'
@@ -48,12 +48,49 @@ const Create = () => {
         </View>
 
         <View className='my-7 space-y-2'>
-            <Text className='text-base text-gray-100 font-pmedium'>
-              {/* 缩略图 */}
-              Thumbnail Image
-            </Text>
+          <Text className='text-base text-gray-100 font-pmedium'>
+            {/* 缩略图 */}
+            Thumbnail Image
+          </Text>
+
+          <TouchableOpacity>
+            {form.thumbnail ? (
+              <Image
+                source={{
+                  uri: form.thumbnail,
+                }}
+                resizeMode='cover'
+                className='w-full h-64 rounded-2xl'
+              />
+            ) : (
+              <View className='w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 flex justify-center items-center flex-row space-x-2'>
+                <Image
+                  source={icons.upload}
+                  resizeMode='contain'
+                  alt='upload'
+                  className='w-5 h-5'
+                />
+                <Text className='text-sm text-gray-100 font-pmedium'>
+                  Choose a file
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
 
+        <FormFiled
+          title='AI Prompt'
+          value={form.prompt}
+          placeholder='The AI prompt of your video....'
+          handleChangeText={(e) => setForm({ ...form, prompt: e })}
+          otherStyles='mt-7'
+        />
+        <CustomButton
+          title='Submit & Publish'
+          // handlePress={submit}
+          // isLoading={uploading}
+          contentContainerStyles='mt-7'
+        />
       </ScrollView>
     </SafeAreaView>
   )
