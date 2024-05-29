@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { FormFiled, CustomButton } from '../../components'
 import { useState } from 'react'
 import { Video, ResizeMode } from 'expo-av'
+import * as DocumentPicker from 'expo-document-picker'
 import { icons } from '../../constants'
 const Create = () => {
   const [upLoading, setUploading] = useState(false)
@@ -13,7 +14,14 @@ const Create = () => {
     prompt: '',
   })
 
-  const openPicker = async (selectType) => {}
+  const openPicker = async (selectType) => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type:
+        selectType === 'image'
+          ? ['image/png', 'image/jpg']
+          : ['video/mp4', 'video/gif'],
+    })
+  }
 
   const submit = () => {}
   return (
