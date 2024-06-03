@@ -26,6 +26,7 @@ const Home = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <VideoCard
+            key={item.$id}
             title={item.title}
             thumbnail={item.thumbnail}
             video={item.video}
