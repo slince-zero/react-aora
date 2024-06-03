@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FormFiled, CustomButton } from '../../components'
 import { useState } from 'react'
@@ -18,9 +25,29 @@ const Create = () => {
     const result = await DocumentPicker.getDocumentAsync({
       type:
         selectType === 'image'
-          ? ['image/png', 'image/jpg']
+          ? ['image/png', 'image/jpg', 'image/jpeg']
           : ['video/mp4', 'video/gif'],
     })
+
+    if (!result.canceled) {
+      if (selectType === 'image') {
+        setForm({
+          ...form,
+          thumbnail: result.assets[0],
+        })
+      }
+
+      if (selectType === 'video') {
+        setForm({
+          ...form,
+          video: result.assets[0],
+        })
+      }
+    } else {
+      setTimeout(() => {
+        Alert.alert('document picked', JSON.stringify(result, null, 2))
+      })
+    }
   }
 
   const submit = () => {}
@@ -64,7 +91,7 @@ const Create = () => {
             Thumbnail Image
           </Text>
 
-          <TouchableOpacity onPress={() => openPicker('video')}>
+          <TouchableOpacity onPress={() => openPicker('image')}>
             {form.thumbnail ? (
               <Image
                 source={{
