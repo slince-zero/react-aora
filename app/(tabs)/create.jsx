@@ -9,9 +9,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FormFiled, CustomButton } from '../../components'
 import { useState } from 'react'
-import { Video, ResizeMode } from 'expo-av'
+import { Video } from 'expo-av'
+import { router } from 'expo-router'
 import * as DocumentPicker from 'expo-document-picker'
 import { icons } from '../../constants'
+import { createVideoPost } from '../../lib/appwrite'
 const Create = () => {
   const [upLoading, setUploading] = useState(false)
   const [form, setForm] = useState({
@@ -50,7 +52,37 @@ const Create = () => {
     }
   }
 
-  const submit = () => {}
+  const submit = async () => {
+    if (
+      (form.prompt === '') |
+      (form.title === '') |
+      !form.thumbnail |
+      !form.video
+    ) {
+      return Alert.alert('Please provide all fields')
+    }
+    setUploading(true)
+    try {
+      await createVideoPost({
+        ...form,
+        userId: user.$id,
+      })
+
+      Alert.alert('Success', 'Post uploaded successfully')
+      router.push('/home')
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    } finally {
+      setForm({
+        title: '',
+        video: null,
+        thumbnail: null,
+        prompt: '',
+      })
+
+      setUploading(false)
+    }
+  }
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView className='px-4 my-6'>
