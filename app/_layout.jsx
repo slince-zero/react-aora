@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { GlobalContextProvider } from '../context/globalContext'
 // 阻止启动屏幕自动隐藏，直到我们调用 SplashScreen.hideAsync() 方法
 SplashScreen.preventAutoHideAsync()
-export default function RootLayout() {
+export default function RootLayout() { 
   // 异步加载字体，fontsLoaded是否加载完成，error是否有错误
   const [fontsLoaded, error] = useFonts({
     'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
